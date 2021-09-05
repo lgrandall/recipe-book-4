@@ -1,0 +1,13 @@
+<div class="field">
+  <%= f.label "Ingredients name" %>
+
+      <%= puts "louis randall the params for the ingredients from the edit side: #{params.inspect}" %>
+      <%= select_tag 'Ingredient', options_for_select(Ingredient.all.collect{ |u| [u.name, u.id.to_s]}), include_blank: true, multiple: true %>
+      <%= select_tag 'Quantity', options_for_select(Quantity.all.collect{ |u| [u.amount, u.id.to_s]}), include_blank: true, multiple: true %>
+      <%= select_tag 'Measurement', options_for_select(Measurement.all.collect{ |u| [u.name, u.id.to_s]}), include_blank: true, multiple: true %>
+
+  <%#= l.collection_select(:ingredient, Ingredient.all, :id, :name, {}, {:multiple => true, :size => 0}) %>
+  <%#= l.select :ingredients, Ingredient.all.collect(&:name), {include_blank: true}, { multiple: true} %>
+
+
+</div>

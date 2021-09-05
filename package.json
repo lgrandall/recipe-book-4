@@ -1,0 +1,8 @@
+{
+  "name": "RecipeBook",
+  "private": true,
+  "dependencies": {
+    "cocoon": "github:nathanvda/cocoon#c24ba53",
+    "jquery": "^3.6.0"
+  }
+}

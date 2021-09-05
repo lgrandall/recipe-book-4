@@ -1,0 +1,84 @@
+<h1>Editing Recipe</h1>
+
+<%= form_with(model: @recipe, local: true, dynamic: true) do |form| %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :expert %>
+    <%= form.check_box :expert %>
+  </div>
+
+  <div class="field">
+    <%= form.label :image_ur %>
+    <%= form.text_area :image_ur %>
+  </div>
+
+  <div class="field">
+    <%= form.label :image_ur %>
+    <%= form.text_area :image_ur %>
+  </div>
+
+  <% if params['action'] == 'edit' %>
+    <div class="field">
+      <div class="ingredients">
+        <% form_for @recipe.recipe_ingredients do |ff| %>
+          <%= ff.label :ingredient_id %>
+          <%= ff.number_field :ingredient_id %>
+        <% end  %>
+        <%= render partial: "ingredient_fields", locals: { f: form, recipe: @recipe }  %>
+      </div>
+
+      <%= link_to_remove_association "Delete", form, data: { association_insertion_node: '.ingredients'}%>
+      <%= link_to_add_association "Add Ingredient", form, :ingredients, render_options: {locals: { f: form, recipe: @recipe }}, data: { association_insertion_node: '.ingredients', association_insertion_method: :append } %>
+    </div>
+  <% else %>
+    <div class="field">
+      <div class="ingredients">
+        <%= form.fields_for :ingredients, @recipe.recipe_ingredients, dynamic: true do |ff| %>
+          <%= render partial: "ingredient_fields", locals: { f: ff, l: form, recipe: :recipe }  %>
+          <%=puts "LOUIS RANDALL THE cool PARAMS: #{params.inspect}" %>
+        <% end %>
+      </div>
+
+      <%= link_to_remove_association "Delete", form, data: { association_insertion_node: '.ingredients'}%>
+      <%= link_to_add_association "Add Ingredient", form, :ingredients, render_options: {locals: { l: form }}, data: { association_insertion_node: '.ingredients', association_insertion_method: :append } %>
+    </div>
+  <% end %>
+
+
+
+  <div class="actions">
+    <%= form.submit %>
+    <%=puts "LOUIS RANDALL THE PARAMS: #{params.inspect}" %>
+  </div>
+<% end %>
+
+<%# form_for @recipe.recipe_ingredients, url: {action: "edit"}, method: "patch" do |form| %>
+<!--  <div class="field">-->
+    <%#= form.label :ingredient_id %>
+    <%#= form.integer :ingredient_id %>
+<!--  </div>-->
+
+<!--  <div class="field">-->
+    <%#= form.label :measurement_id %>
+    <%#= form.integer :measurement_id %>
+<!--  </div>-->
+
+<!--  <div class="field">-->
+    <%#= form.label :quantity_id %>
+    <%#= form.integer :quantity_id %>
+<!--  </div>-->
+  <%#= f.submit %>
+<%# end %>
+
+
+<%= link_to 'Show', @recipe %> |
+<%= link_to 'Back', recipes_path %>

@@ -1,0 +1,82 @@
+<%= form_with(model: recipe, local: true, dynamic: true) do |form| %>
+  <% if recipe.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+
+      <ul>
+      <% recipe.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :expert %>
+    <%= form.check_box :expert %>
+  </div>
+
+  <div class="field">
+    <%= form.label :image_ur %>
+    <%= form.text_area :image_ur %>
+  </div>
+
+<!--  <div class="field">-->
+    <%#= form.label :ingredients %>
+    <%#= form.collection_select(:recipe, :ingredients, Ingredient.all, :id) %>
+<!--  </div>-->
+
+  <div class="field">
+    <div class="ingredients">
+      <%= form.fields_for :ingredients, recipe.ingredients.build, dynamic: true do |ff| %>
+        <%= render partial: "ingredient_fields", locals: { f: ff, l: form, recipe: :recipe, build_instruction: true }  %>
+        <%=puts "LOUIS RANDALL THE PARAMS: #{params.inspect}" %>
+      <% end %>
+    </div>
+
+    <%= link_to_remove_association "Delete", form, data: { association_insertion_node: '.ingredients'}%>
+    <%= link_to_add_association "Add Ingredient", form, :ingredients, render_options: {locals: { l: form, build_instruction: true }}, data: { association_insertion_node: '.ingredients', association_insertion_method: :append } %>
+  </div>
+
+  <div class="field">
+    <div class="instructions">
+      <%= form.fields_for :instructions, recipe.instructions.build, dynamic: true do |ff| %>
+        <%= render partial: "instruction_fields", locals: { f: ff, l: form, recipe: :recipe, build_instruction: false }  %>
+        <%=puts "LOUIS RANDALL THE PARAMS: #{params.inspect}" %>
+      <% end %>
+    </div>
+
+    <%= link_to_remove_association "Delete", form, data: { association_insertion_node: '.instructions'}%>
+    <%= link_to_add_association "Add Instruction", form, :instructions, render_options: {locals: { l: form, build_instruction: false }}, data: { association_insertion_node: '.instructions', association_insertion_method: :append } %>
+  </div>
+
+  <div class="field">
+    <div class="build_instructions">
+    </div>
+
+    <%= link_to_remove_association "Delete", form, data: { association_insertion_node: '.build_instructions'}%>
+    <%= link_to_add_association "Add Instruction from Scratch", form, :instructions, render_options: {locals: { l: form, build_instruction: true }}, data: { association_insertion_node: '.build_instructions', association_insertion_method: :append } %>
+  </div>
+
+<!--  <div class="field">-->
+    <%#= fields_for :ingredient, @recipe.ingredients do |i| %>
+      <%#= i.label "Ingredient" %>
+      <%#= i.collection_select(:recipe, :ingredients, Ingredient.all, :id) %>
+    <%# end %>
+<!--  </div>-->
+
+  <div class="actions">
+    <%= form.submit %>
+    <%=puts "LOUIS RANDALL THE PARAMS: #{params.inspect}" %>
+  </div>
+<% end %>

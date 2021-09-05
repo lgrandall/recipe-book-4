@@ -1,0 +1,34 @@
+<div class="field">
+  <%#= l.collection_select(:ingredient, Ingredient.all, :id, :name, {}, {:multiple => true, :size => 0}) %>
+  <%#= l.select :ingredients, Ingredient.all.collect(&:name), {include_blank: true}, { multiple: true} %>
+
+  <% if build_instruction == true %>
+    <div>
+      <div class="field">
+        <%= f.label "Instruction name" %>
+        <%= f.text_field :short_hand_name %>
+      </div>
+
+      <div class="field">
+        <%= f.label "Instruction description" %>
+        <%= f.text_area :description %>
+      </div>
+
+      <div class="field">
+        <%= f.label "Instruction time amount" %>
+        <%= f.number_field :time_amount %>
+      </div>
+
+      <div class="field">
+        <%= f.label "Step Order in Recipe" %>
+        <%= f.number_field :order %>
+      </div>
+    </div>
+  <% else %>
+    <div>
+      <%= f.label "Instruction name and order" %>
+      <%= select_tag 'Instruction', options_for_select(Instruction.all.collect{ |u| [u.short_hand_name, u.id.to_s]}), include_blank: true, multiple: true %>
+      <%= select_tag 'Order', options_for_select(1..100), include_blank: true, multiple: true %>
+    </div>
+  <% end %>
+</div>

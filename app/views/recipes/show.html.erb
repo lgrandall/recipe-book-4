@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<div>
+  <p>
+    <strong>Name:</strong>
+    <%= @recipe.name %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= @recipe.description %>
+  </p>
+
+  <p>
+    <strong>Expert:</strong>
+    <%= @recipe.expert %>
+  </p>
+
+  <p>
+    <strong>Image ur:</strong>
+    <%= @recipe.image_ur %>
+  </p>
+</div>
+
+<br>
+<div class="table">
+  <h2>Recipe Ingredients</h2>
+  <table>
+    <tr>
+      <th>Ingredient Name</th>
+      <th>Quantity</th>
+      <th>Measurement Type</th>
+    </tr>
+
+    <% @recipe.recipe_ingredients.each do |recipe_ingredient| %>
+      <tr>
+        <td><%= recipe_ingredient.ingredient.name %></td>
+        <td><%= recipe_ingredient.quantity.amount %></td>
+        <td><%= recipe_ingredient.measurement.name %></td>
+
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<div class="table">
+  <h2>Instructions</h2>
+  <table>
+    <tr>
+      <th>Instruction Name</th>
+      <th>Description</th>
+      <th>Time Amount (seconds)</th>
+    </tr>
+
+    <% @recipe.recipe_instructions.each do |recipe_instruction| %>
+      <tr>
+        <td><%= recipe_instruction.instruction.short_hand_name %></td>
+        <td><%= recipe_instruction.instruction.description %></td>
+        <td><%= recipe_instruction.instruction.time_amount %></td>
+
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+
+
+<%= link_to 'Edit', edit_recipe_path(@recipe) %> |
+<%= link_to 'Back', recipes_path %>
